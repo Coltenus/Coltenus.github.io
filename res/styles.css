@@ -125,3 +125,7 @@
     background-color: rgba(210,130,240, 0) !important;
     border-color: #67cfff;
 }
+
+.text-size-1 {
+    font-size: 1.4rem;
+}
