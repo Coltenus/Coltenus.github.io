@@ -1,5 +1,7 @@
 # Лабораторна робота №1 "Розробка статичного інтерфейсу Web-додатка"
 
+# [Звіт](https://docs.google.com/document/d/1QoreH4B7FJvJBbiYRG4Y3TyI0qHLDw4SfEAgOm_OXPU/edit)
+
 # Виконав
 Яцков Максим Юрійович КВ-13
 
