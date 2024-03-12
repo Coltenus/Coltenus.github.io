@@ -124,6 +124,7 @@
 .table-1 tbody tr td {
     background-color: rgba(210,130,240, 0) !important;
     border-color: #67cfff;
+    color: #67cfff;
 }
 
 .text-size-1 {
