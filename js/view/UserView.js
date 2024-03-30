@@ -5,7 +5,7 @@ export default class UserView {
 
     displayEmail(id) {
         let email = this.userModel.getEmail();
-        if (email === "") {
+        if (email === "" || email === null) {
             email = "Not logged in";
         }
         document.getElementById(id).textContent = email;
@@ -13,7 +13,7 @@ export default class UserView {
 
     displayGender(id) {
         let gender = this.userModel.getGender();
-        if(gender === "") {
+        if(gender === "" || gender === null) {
             gender = "Unknown";
         }
         document.getElementById(id).textContent = gender;
@@ -21,7 +21,7 @@ export default class UserView {
 
     displayBirthdate(id) {
         let birthdate = this.userModel.getBirthdate();
-        if(birthdate === "") {
+        if(birthdate === "" || birthdate === null) {
             birthdate = "Unknown";
         }
         document.getElementById(id).textContent = birthdate;
