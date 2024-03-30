@@ -101,6 +101,10 @@ export default class Controller {
     handleSave() {
         if(this.dataReady) {
             const label = document.getElementById("labelTimer").value;
+            if(label === "") {
+                alert("Please enter a label for the timer");
+                return;
+            }
             const stTime = this.timerModel.getTimerStart();
             const endTime = this.timerModel.getTimer();
             const spentTime = this.timerModel.getSpentTime();
