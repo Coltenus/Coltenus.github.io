@@ -60,6 +60,10 @@ export default class Controller {
         if(this.userModel.getEmail() !== "") {
             this.userView.displayLinks2(id, page);
         }
+        let tableSaves = localStorage.getItem("tableSaves");
+        if(tableSaves !== null) {
+            this.tableModel.setItems(tableSaves);
+        }
     }
 
     handleStart() {
@@ -119,6 +123,7 @@ export default class Controller {
         const endTime = this.timerModel.getTimer();
         const spentTime = this.timerModel.getSpentTime();
         this.tableModel.addItem(label, stTime, endTime, spentTime);
+        localStorage.setItem("tableSaves", JSON.stringify(this.tableModel.getItems()));
         this.dataReady = false;
     }
 }
