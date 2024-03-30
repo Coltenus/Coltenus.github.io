@@ -99,17 +99,26 @@ export default class Controller {
     }
 
     handleSave() {
+        if(!this.end) {
+            this.timerModel.stopTimer();
+            this.end = true;
+            this.dataReady = true;
+        }
         if(this.dataReady) {
-            const label = document.getElementById("labelTimer").value;
-            if(label === "") {
+            if(document.getElementById("labelTimer").value === "") {
                 alert("Please enter a label for the timer");
                 return;
             }
-            const stTime = this.timerModel.getTimerStart();
-            const endTime = this.timerModel.getTimer();
-            const spentTime = this.timerModel.getSpentTime();
-            this.tableModel.addItem(label, stTime, endTime, spentTime);
-            this.dataReady = false;
+            this.saveData();
         }
+    }
+
+    saveData() {
+        const label = document.getElementById("labelTimer").value;
+        const stTime = this.timerModel.getTimerStart();
+        const endTime = this.timerModel.getTimer();
+        const spentTime = this.timerModel.getSpentTime();
+        this.tableModel.addItem(label, stTime, endTime, spentTime);
+        this.dataReady = false;
     }
 }
