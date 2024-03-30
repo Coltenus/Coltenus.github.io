@@ -21,7 +21,7 @@ export default class ControllerLogin {
             localStorage.setItem("email", email);
             localStorage.setItem("password", password);
             localStorage.setItem("authorized", true);
-            window.location.replace("/");
+            window.location.replace("index.html");
         }
     }
 }

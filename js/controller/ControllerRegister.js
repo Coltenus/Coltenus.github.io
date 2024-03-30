@@ -49,7 +49,7 @@ export default class ControllerRegister {
                     break;
             }
             localStorage.setItem("authorized", true);
-            window.location.replace("/");
+            window.location.replace("index.html");
         }
     }
 }

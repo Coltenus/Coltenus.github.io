@@ -40,7 +40,7 @@ export default class UserView {
         logout_button.addEventListener("click", function() {
             localStorage.clear();
             localStorage.setItem("authorized", false);
-            window.location.replace("/");
+            window.location.replace("index.html");
         });
     }
 
