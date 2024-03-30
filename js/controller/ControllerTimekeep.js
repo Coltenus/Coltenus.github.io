@@ -2,9 +2,13 @@ import Timer from "../model/TimerModel.js";
 import TimerView from "../view/TimerView.js";
 import TableModel from "../model/TableModel.js";
 import TableView from "../view/TableView.js";
+import UserModel from "../model/UserModel.js";
+import UserView from "../view/UserView.js";
 
 export default class Controller {
     constructor() {
+        this.userModel = new UserModel();
+        this.userView = new UserView(this.userModel);
         this.timerModel = new Timer();
         this.timerView = new TimerView(this.timerModel);
         this.tableModel = new TableModel();
@@ -18,6 +22,8 @@ export default class Controller {
     }
 
     init() {
+        const id = "user-links";
+        const page = "timekeep.html";
         const timerDisplay1 = document.getElementById("timer1");
         timerDisplay1.innerHTML = this.timerView.timerDisplay(1);
         const timerDisplay2 = document.getElementById("timer2");
@@ -45,6 +51,15 @@ export default class Controller {
                 this.spentHour = this.timerModel.getSpentTime().hours;
             }
         }, 1000);
+        if (JSON.parse(localStorage.getItem("authorized")) === true) {
+            this.userModel.setEmail(localStorage.getItem("email"));
+            this.userModel.setGender(localStorage.getItem("gender"));
+            this.userModel.setBirthdate(localStorage.getItem("birthdate"));
+            this.userModel.setPassword(localStorage.getItem("password"));
+        }
+        if(this.userModel.getEmail() !== "") {
+            this.userView.displayLinks2(id, page);
+        }
     }
 
     handleStart() {

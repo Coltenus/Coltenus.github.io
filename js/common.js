@@ -15,3 +15,9 @@ export const TimeToString = function(time) {
     let seconds = time.seconds;
     return `${zeroPad(hours, 2)}:${zeroPad(minutes, 2)}:${zeroPad(seconds, 2)}`;
 }
+
+export const RemoveChildren = function(node) {
+    for(let i = node.children.length-1; i >= 0; i--) {
+        node.removeChild(node.children[i]);
+    }
+}
