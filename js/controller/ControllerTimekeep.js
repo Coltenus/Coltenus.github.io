@@ -38,6 +38,8 @@ export default class Controller {
         stopButton.addEventListener("click", () => this.handleStop());
         const saveButton = document.getElementById("saveData");
         saveButton.addEventListener("click", () => this.handleSave());
+        const clearButton = document.getElementById("clearData");
+        clearButton.addEventListener("click", () => this.handleClear());
         setInterval(() => {
             const table = document.getElementById("timerTable");
             table.innerHTML = this.tableView.tableDisplay();
@@ -125,5 +127,11 @@ export default class Controller {
         this.tableModel.addItem(label, stTime, endTime, spentTime);
         localStorage.setItem("tableSaves", JSON.stringify(this.tableModel.getItems()));
         this.dataReady = false;
+    }
+
+    handleClear() {
+        this.tableModel.setItems("[]");
+        localStorage.setItem("tableSaves", "[]");
+        window.location.reload();
     }
 }
