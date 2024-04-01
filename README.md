@@ -1,6 +1,6 @@
 # Лабораторна робота №2 "Розробка функціональності Web-додатка мовою Javascript"
 
-# Звіт
+# [Звіт](https://docs.google.com/document/d/1VadA7GUExsBIv6iv_XirqEJ7PuJ8KuurecwbhNJYeTg/edit?usp=sharing)
 
 # Виконав
 Яцков Максим Юрійович КВ-13
