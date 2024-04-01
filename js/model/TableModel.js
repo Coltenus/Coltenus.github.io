@@ -1,6 +1,6 @@
 import TableItem from "./TableItemModel.js";
 
-export default class Table {
+export default class TableModel {
     constructor() {
         this.tableItems = [];
         this.id = 0;
