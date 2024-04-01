@@ -1,4 +1,4 @@
-import Timer from "../model/TimerModel.js";
+import TimerModel from "../model/TimerModel.js";
 import TimerView from "../view/TimerView.js";
 import TableModel from "../model/TableModel.js";
 import TableView from "../view/TableView.js";
@@ -9,7 +9,7 @@ export default class Controller {
     constructor() {
         this.userModel = new UserModel();
         this.userView = new UserView(this.userModel);
-        this.timerModel = new Timer();
+        this.timerModel = new TimerModel();
         this.timerView = new TimerView(this.timerModel);
         this.tableModel = new TableModel();
         this.tableView = new TableView(this.tableModel);
