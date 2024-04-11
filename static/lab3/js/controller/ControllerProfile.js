@@ -11,7 +11,7 @@ export default class ControllerProfile {
         const save_password_button = document.getElementById("save-password-button");
         save_password_button.addEventListener("click", this.save_password_event);
         const id = "user-links";
-        const page = "profile.html";
+        const page = "profile";
 
         if (JSON.parse(localStorage.getItem("authorized")) === true) {
             this.userModel.setEmail(localStorage.getItem("email"));

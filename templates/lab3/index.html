@@ -1,0 +1,27 @@
+{% extends 'lab3/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1 class="lead display-3 text-1">Welcome to the Timekeeper</h1>
+        <p class="text-1">Here you can keep track of your time and manage your tasks</p>
+        <div class="container-1">
+            <a href="timekeep" class="btn btn-1">Start usage</a>
+        </div>
+    </div>
+    <div class="col p-1 mt-3" id="user-links">
+        <div class="container rounded bg-color-3 box-1">
+            <p>If you have an account, you can <a href="login" class="btn fg-color-3">Login</a></p>
+        </div>
+        <br>
+        <div class="container rounded bg-color-3 box-1">
+            <p>Do not have an account? You can <a href="register" class="btn fg-color-3">Register</a></p>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block page_script %}
+{% load static %}
+<script type="module" src="{% static 'lab3/js/index.js' %}"></script>
+{% endblock page_script %}

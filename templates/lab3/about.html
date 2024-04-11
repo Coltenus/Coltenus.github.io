@@ -1,0 +1,28 @@
+{% extends 'lab3/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col box-3 mb-3">
+        <h2 class="text-1 display-3">Timekeeper</h1>
+        <p class="blockquote">This app can help you keep track of your time and manage your tasks</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col box-3">
+        {% load static %}
+        <img src="{% static 'lab3/img/emblem.png' %}" alt="Emblem" class="d-inline-block align-text-top">
+    </div>
+</div>
+{% endblock content %}
+
+{% block page_script %}
+{% load static %}
+<script type="module" src="{% static 'lab3/js/about.js' %}"></script>
+{% endblock page_script %}
+
+{% block user_links %}
+<div class="prc-1 navbar-nav ml-auto" id="user-links">
+    <a class="plc-1 nav-item nav-link" href="login">Login</a>
+    <a class="plc-1 nav-item nav-link" href="register">Register</a>
+</div>
+{% endblock user_links %}

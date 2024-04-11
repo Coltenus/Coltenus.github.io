@@ -10,7 +10,7 @@ export default class ControllerAbout {
 
     init() {
         const id = "user-links";
-        const page = "about.html";
+        const page = "about";
         if (JSON.parse(localStorage.getItem("authorized")) === true) {
             this.userModel.setEmail(localStorage.getItem("email"));
             this.userModel.setGender(localStorage.getItem("gender"));

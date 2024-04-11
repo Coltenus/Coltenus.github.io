@@ -23,7 +23,7 @@ export default class Controller {
 
     init() {
         const id = "user-links";
-        const page = "timekeep.html";
+        const page = "timekeep";
         const timerDisplay1 = document.getElementById("timer1");
         timerDisplay1.innerHTML = this.timerView.timerDisplay(1);
         const timerDisplay2 = document.getElementById("timer2");
