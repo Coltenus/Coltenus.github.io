@@ -1,5 +1,5 @@
 **.drawio
-**.png
+*.png
 staticfiles
 db.sqlite3
 poetry.lock
