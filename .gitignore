@@ -1,0 +1,6 @@
+**.drawio
+**.png
+staticfiles
+db.sqlite3
+poetry.lock
+**/__pycache__
