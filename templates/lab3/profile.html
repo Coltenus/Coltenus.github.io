@@ -9,30 +9,35 @@
             </div>
             <div class="row">
                 <div class="col"><p>Email</p></div>
-                <div class="col"><p id="email"></p></div>
+                <div class="col"><p>{{email}}</p></div>
             </div>
             <div class="row">
                 <div class="col"><p>Gender</p></div>
-                <div class="col"><p id="gender"></p></div>
+                <div class="col"><p>{{gender}}</p></div>
             </div>
             <div class="row">
                 <div class="col"><p>Birth date</p></div>
-                <div class="col"><p id="bdate"></p></div>
+                <div class="col"><p>{{bdate}}</p></div>
             </div>
-            <form action="#">
+            <form action="/change-pass" method="POST">
+                {% csrf_token %}
                 <div class="input-group plc-1 prc-1 min-vw-65">
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control input-1" id="password1" placeholder="password1">
+                        {{ form.password1 }}
                         <label for="floatingInput">Password</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control input-1" id="password2" placeholder="password2">
+                        {{ form.password2 }}
                         <label for="floatingInput">Confirm password</label>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col">
-                        <button type="submit" class="btn btn-1" id="save-password-button">Change password</button>
+                        {% if hash != None %}
+                        <button type="submit" class="btn btn-1">Change password</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-1" disabled>Change password</button>
+                        {% endif %}
                     </div>
                 </div>
             </form>
@@ -48,5 +53,11 @@
 
 {% block user_links %}
 <div class="prc-1 navbar-nav ml-auto" id="user-links">
+    {% if hash == None %}
+    <a class="plc-1 nav-item nav-link" href="login">Login</a>
+    <a class="plc-1 nav-item nav-link" href="register">Register</a>
+    {% else %}
+    <a class="plc-1 nav-item nav-link" href="logout">Logout</a>
+    {% endif %}
 </div>
 {% endblock user_links %}

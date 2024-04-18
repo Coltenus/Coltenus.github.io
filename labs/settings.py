@@ -25,12 +25,23 @@ SECRET_KEY = 'django-insecure-*rrhan)6-c64po3=!6j$(nv@gaju$_ckjdi(1qh33z20%(vi43
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
+
+CORS_ORIGIN_WHITELIST = (
+
+    'localhost:8000',
+    "http://127.0.0.1:8000",
+)
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', "http://127.0.0.1:8000"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "lab3.apps.Lab3Config",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,7 +87,7 @@ WSGI_APPLICATION = 'labs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'labs.sqlite3',
     }
 }
 

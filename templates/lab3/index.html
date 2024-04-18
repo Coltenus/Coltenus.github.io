@@ -10,6 +10,7 @@
         </div>
     </div>
     <div class="col p-1 mt-3" id="user-links">
+        {% if hash == None %}
         <div class="container rounded bg-color-3 box-1">
             <p>If you have an account, you can <a href="login" class="btn fg-color-3">Login</a></p>
         </div>
@@ -17,6 +18,15 @@
         <div class="container rounded bg-color-3 box-1">
             <p>Do not have an account? You can <a href="register" class="btn fg-color-3">Register</a></p>
         </div>
+        {% else %}
+        <div class="container rounded bg-color-3 box-1">
+            <p>Welcome,</p><p>{{email}}</p>
+        </div>
+        <br>
+        <div class="container rounded bg-color-3 box-1">
+            <p>To logout press <a href="logout" class="btn fg-color-3">this button</a></p>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock content %}
@@ -25,3 +35,6 @@
 {% load static %}
 <script type="module" src="{% static 'lab3/js/index.js' %}"></script>
 {% endblock page_script %}
+
+{% block user_links %}
+{% endblock user_links %}

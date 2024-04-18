@@ -9,4 +9,8 @@ urlpatterns = [
     path("timekeep", views.TimekeepView.as_view(), name="timekeep"),
     path("login", views.LoginView.as_view(), name="login"),
     path("register", views.RegisterView.as_view(), name="register"),
+    path("registration", views.register, name="registration"),
+    path("logout", views.logout, name="logout"),
+    path("auth", views.auth, name="auth"),
+    path("change-pass", views.change_pass, name="change-pass"),
 ]
