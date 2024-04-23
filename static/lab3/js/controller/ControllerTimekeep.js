@@ -2,6 +2,7 @@ import TimerModel from "../model/TimerModel.js";
 import TimerView from "../view/TimerView.js";
 import TableModel from "../model/TableModel.js";
 import TableView from "../view/TableView.js";
+import { getCookie } from "../common.js";
 
 export default class Controller {
     constructor() {
@@ -109,6 +110,18 @@ export default class Controller {
         const spentTime = this.timerModel.getSpentTime();
         this.tableModel.addItem(label, stTime, endTime, spentTime);
         localStorage.setItem("tableSaves", JSON.stringify(this.tableModel.getItems()));
+        fetch("/api/update-spent-time",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                user_hash: getCookie("user_hash"),
+                spent_time: `${this.spentHour}:${this.spentMin}:${this.spentSec}`,
+            }),
+        }).then((response) => response.json())
+        .then((data) => alert(data.message));
         this.dataReady = false;
     }
 

@@ -17,6 +17,9 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["page_access"] = True
         user_hash = self.request.COOKIES.get("user_hash")
+        if user_hash != None and len(User.objects.filter(user_hash=user_hash)) != 1:
+            self.response.delete_cookie("user_hash")
+            user_hash = None
         context["hash"] = user_hash
         if user_hash != None:
             users = User.objects.filter(user_hash=user_hash)
@@ -32,6 +35,9 @@ class ProfileView(TemplateView):
         context["page_access"] = True
         context["form"] = ChangePasswordForm()
         user_hash = self.request.COOKIES.get("user_hash")
+        if user_hash != None and len(User.objects.filter(user_hash=user_hash)) != 1:
+            self.response.delete_cookie("user_hash")
+            user_hash = None
         context["hash"] = user_hash
         if user_hash != None:
             users = User.objects.filter(user_hash=user_hash)
@@ -39,6 +45,7 @@ class ProfileView(TemplateView):
                 context["email"] = users[0].email
                 context["gender"] = users[0].gender
                 context["bdate"] = users[0].birthdate
+                context["spent_time"] = users[0].spent_time
         return context
 
 class AboutView(TemplateView):
@@ -48,6 +55,9 @@ class AboutView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["page_access"] = False
         user_hash = self.request.COOKIES.get("user_hash")
+        if user_hash != None and len(User.objects.filter(user_hash=user_hash)) != 1:
+            self.response.delete_cookie("user_hash")
+            user_hash = None
         context["hash"] = user_hash
         if user_hash != None:
             users = User.objects.filter(user_hash=user_hash)
@@ -64,6 +74,9 @@ class TimekeepView(TemplateView):
         context = {}
         context["page_access"] = True
         user_hash = self.request.COOKIES.get("user_hash")
+        if user_hash != None and len(User.objects.filter(user_hash=user_hash)) != 1:
+            self.response.delete_cookie("user_hash")
+            user_hash = None
         context["hash"] = user_hash
         if user_hash != None:
             users = User.objects.filter(user_hash=user_hash)
@@ -140,7 +153,9 @@ def change_pass(request):
                 return redirect('profile')
             users = User.objects.filter(user_hash=user_hash)
             if len(users) != 1:
-                return redirect('profile')
+                response = redirect('profile')
+                response.delete_cookie("user_hash")
+                return response
             if users[0].password_hash == hashlib.sha256(str.encode(form.cleaned_data["password1"])).hexdigest():
                 return redirect('profile')
             users[0].password_hash = hashlib.sha256(str.encode(form.cleaned_data["password1"])).hexdigest()
