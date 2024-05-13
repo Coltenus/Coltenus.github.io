@@ -2,8 +2,16 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import hashlib
-from lab3.models import User
+from .models import User
 from datetime import datetime, timedelta
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+USER_HASH_SECRET = str(os.getenv("USER_HASH_SECRET"))
+
+def str_with_secret(s: str) -> str:
+    return s + USER_HASH_SECRET
 
 # Create your views here.
 
@@ -48,18 +56,22 @@ def register(request):
             if User.objects.filter(email=json_data.get("email")).exists():
                 return JsonResponse({"status": "error", "message": "User already exists"})
             try:
-                birthdate = datetime.strptime(json_data.get("birthdate"), "%d/%m/%Y")
+                birthdate = datetime.strptime(json_data.get("birthdate"), "%Y-%m-%d")
             except ValueError:
                 return JsonResponse({"status": "error", "message": "Invalid date format."})
-            user_hash = hashlib.sha256(json_data.get("email").encode('utf-8')).hexdigest()
+            user_hash = hashlib.sha256(str_with_secret(json_data.get("email")).encode('utf-8')).hexdigest()
             password_hash = hashlib.sha256(json_data.get("password1").encode('utf-8')).hexdigest()
-            match json_data.get("gender"):
-                case 1:
-                    gender = 'Male'
-                case 2:
-                    gender = 'Female'
-                case _:
-                    gender = 'Other'
+            try:
+                gender = int(json_data.get("gender"))
+                match gender:
+                    case 1:
+                        gender = 'Male'
+                    case 2:
+                        gender = 'Female'
+                    case _:
+                        gender = 'Other'
+            except ValueError:
+                gender = 'Other'
             user = User(
                 user_hash = user_hash,
                 email = json_data.get("email"),
@@ -68,7 +80,7 @@ def register(request):
                 birthdate = birthdate,
             )
             user.save()
-            return JsonResponse({"status": "success", "message": "User registered."})
+            return JsonResponse({"status": "success", "message": "User registered.", "user_hash": user_hash})
         else:
             return JsonResponse({"message": "Make sure to set the Content-Type to application/json."})
     else:
@@ -79,19 +91,13 @@ def change_pass(request):
     if request.method == "POST":
         if request.META.get('CONTENT_TYPE') == "application/json":
             json_data = json.loads(request.body)
-            if json_data.get("email") == None or json_data.get("password") == None:
+            if json_data.get("user_hash") == None or json_data.get("password") == None:
                 return JsonResponse({"status": "error", "message": "Invalid request."})
-            if json_data.get("new_password1") == None or json_data.get("new_password2") == None:
-                return JsonResponse({"status": "error", "message": "Invalid request."})
-            users = User.objects.filter(email=json_data.get("email"))
+            users = User.objects.filter(user_hash=json_data.get("user_hash"))
             if len(users) != 1:
                 return JsonResponse({"status": "error", "message": "User not found."})
             user = users[0]
-            if user.password_hash != hashlib.sha256(json_data.get("password").encode('utf-8')).hexdigest():
-                return JsonResponse({"status": "error", "message": "Invalid password."})
-            if json_data.get("new_password1") != json_data.get("new_password2"):
-                return JsonResponse({"status": "error", "message": "Passwords do not match."})
-            user.password_hash = hashlib.sha256(json_data.get("new_password1").encode('utf-8')).hexdigest()
+            user.password_hash = hashlib.sha256(json_data.get("password").encode('utf-8')).hexdigest()
             user.save()
             return JsonResponse({"status": "success", "message": "Password changed."})
         else:
@@ -137,6 +143,25 @@ def clear_spent_time(request):
             user.spent_time = timedelta(0)
             user.save()
             return JsonResponse({"status": "success", "message": "Spent time cleared."})
+        else:
+            return JsonResponse({"message": "Make sure to set the Content-Type to application/json."})
+    else:
+        return JsonResponse({"message": "Invalid request method."})
+    
+@csrf_exempt
+def login(request):
+    if request.method == "POST":
+        if request.META.get('CONTENT_TYPE') == "application/json":
+            json_data = json.loads(request.body)
+            if json_data.get("email") == None or json_data.get("password") == None:
+                return JsonResponse({"status": "error", "message": "Invalid request."})
+            users = User.objects.filter(email=json_data.get("email"))
+            if len(users) != 1:
+                return JsonResponse({"status": "error", "message": "User not found."})
+            user = users[0]
+            if user.password_hash != hashlib.sha256(json_data.get("password").encode('utf-8')).hexdigest():
+                return JsonResponse({"status": "error", "message": "Invalid password."})
+            return JsonResponse({"status": "success", "message": "User authenticated.", "user_hash": user.user_hash})
         else:
             return JsonResponse({"message": "Make sure to set the Content-Type to application/json."})
     else:

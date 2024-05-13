@@ -4,3 +4,7 @@ staticfiles
 *.sqlite3
 poetry.lock
 **/__pycache__
+**/node_modules
+.env
+*.txt
+list.sh

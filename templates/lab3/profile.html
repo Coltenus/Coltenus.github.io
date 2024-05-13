@@ -25,24 +25,25 @@
                 <div class="col"><p>{{spent_time}}</p></div>
             </div>
             <button type="button" class="mb-3 mt-1 btn btn-1" id="clear-button">Clear spent time</button>
-            <form action="/change-pass" method="POST">
+            <form>
                 {% csrf_token %}
                 <div class="input-group plc-1 prc-1 min-vw-65">
                     <div class="form-floating mb-3">
-                        {{ form.password1 }}
+                        <input type="password" class="form-control input-1" id="password1" placeholder="password1">
                         <label for="floatingInput">Password</label>
                     </div>
                     <div class="form-floating mb-3">
-                        {{ form.password2 }}
+                        <input type="password" class="form-control input-1" id="password2" placeholder="password2">
                         <label for="floatingInput">Confirm password</label>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <button type="submit" class="btn btn-1">Change password</button>
-                    </div>
+            </form>
+            <div class="row mb-3">
+                <div class="col">
+                    <button class="btn btn-1" id="save-password-button">Change password</button>
                 </div>
-                {% else %}
+            </div>
+            {% else %}
                 <div class="row">
                     <div class="col"><p>Not logged in</p></div>
                 </div>
@@ -52,14 +53,16 @@
                 <div class="row">
                     <div class="col"><a class="btn btn-1 mb-3" href="register">Register</a></div>
                 </div>
-                {% endif %}
-            </form>
+            {% endif %}
         </div>
     </div>
 </div>
 {% endblock content %}
 
 {% block page_script %}
+<script>
+    password_hash = "{{password_hash}}";
+</script>
 {% load static %}
 <script type="module" src="{% static 'lab3/js/profile.js' %}"></script>
 {% endblock page_script %}

@@ -42,6 +42,7 @@ CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', "http://127.0.0.1:8000"]
 
 INSTALLED_APPS = [
     "lab3.apps.Lab3Config",
+    "api.apps.ApiConfig",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
