@@ -17,22 +17,20 @@ def str_with_secret(s: str) -> str:
 
 @csrf_exempt
 def user(request):
-    if request.method == "GET":
+    if request.method == "POST":
         if request.META.get('CONTENT_TYPE') == "application/json":
             json_data = json.loads(request.body)
-            if json_data.get("email") == None or json_data.get("password") == None:
+            if json_data.get("hash") == None:
                 return JsonResponse({"status": "error", "message": "Invalid request.", "user": None})
-            users = User.objects.filter(email=json_data.get("email"))
+            users = User.objects.filter(user_hash=json_data.get("hash"))
             if len(users) != 1:
                 return JsonResponse({"status": "error", "message": "User not found.", "user": None})
             user = users[0]
-            if user.password_hash != hashlib.sha256(json_data.get("password").encode('utf-8')).hexdigest():
-                return JsonResponse({"status": "error", "message": "Invalid password.", "user": None})
             user_response = {
                 "email": user.email,
                 "gender": user.gender,
                 "birthdate": user.birthdate,
-                "spent_time": user.spent_time,
+                "spent_time": str(user.spent_time),
             }
             return JsonResponse({"status": "success", "message": "User found.", "user": user_response})
         elif request.META.get('CONTENT_TYPE') == 'text/html' or request.META.get('CONTENT_TYPE') == 'text/plain':
