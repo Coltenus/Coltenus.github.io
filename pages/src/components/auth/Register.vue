@@ -1,3 +1,53 @@
+<script setup>
+import {setCookie, api_url} from "/src/common.js";
+
+function register_button() {
+        var email = document.getElementById("email").value;
+        var password1 = document.getElementById("password1").value;
+        var password2 = document.getElementById("password2").value;
+        var gender = document.getElementById("gender").value;
+        var birthdate = document.getElementById("bdate").value;
+        if(password1 !== password2) {
+            alert("Passwords do not match");
+        }
+        else if(email === "") {
+            alert("Email cannot be empty");
+        }
+        else if(password1 === "") {
+            alert("Password cannot be empty");
+        }
+        else if(gender === "Select gender") {
+            alert("Please select gender");
+        }
+        else if(birthdate === "") {
+            alert("Please enter birthdate");
+        }
+        else {
+            fetch(api_url + "/register",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password1: password1,
+                    password2: password2,
+                    gender: gender,
+                    birthdate: birthdate,
+                }),
+            }).then((response) => response.json())
+            .then((data) => {
+                alert(data.message);
+                if(data.user_hash !== undefined) {
+                    setCookie("user_hash", data.user_hash);
+                    window.location.replace("index");
+                }
+            });
+        }
+    }
+</script>
+
 <template>
 <div class="row box-3">
     <div class="col">
@@ -29,10 +79,7 @@
                 <label for="floatingInput">Birth date</label>
             </div>
         </form>
-        <button type="submit" class="btn btn-1 mt-5" id="register-button">Register</button>
+        <button type="submit" class="btn btn-1 mt-5" id="register-button" @click="register_button">Register</button>
     </div>
-</div>
-<div class="container rounded bg-color-3 box-1 mt-5">
-    <p>If you have an account, you can <button id="login-button" class="btn fg-color-3">Login</button></p>
 </div>
 </template>

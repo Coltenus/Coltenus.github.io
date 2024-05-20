@@ -1,3 +1,38 @@
+<script setup>
+import { api_url, setCookie, sha256 } from "/src/common.js";
+
+function login_button() {
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+    if(email === "") {
+        alert("Email cannot be empty");
+    }
+    else if(password === "") {
+        alert("Password cannot be empty");
+    }
+    else {
+        fetch(api_url + "/login",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+            }),
+        }).then((response) => response.json())
+        .then((data) => {
+            alert(data.message);
+            if(data.user_hash !== undefined) {
+                setCookie("user_hash", data.user_hash);
+                window.location.replace("index");
+            }
+        });
+    }
+}
+</script>
+
 <template>
 <div class="row box-3">
     <div class="col">
@@ -14,10 +49,7 @@
             </div>
             <br>
         </form>
-        <button type="submit" class="btn btn-1" id="login-button">Log in</button>
+        <button type="submit" class="btn btn-1" id="login-button" @click="login_button">Log in</button>
     </div>
-</div>
-<div class="container rounded bg-color-3 box-1 mt-5">
-    <p>Do not have an account? You can <button id="register-button" class="btn fg-color-3">Register</button></p>
 </div>
 </template>

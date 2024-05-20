@@ -6,8 +6,6 @@ import AccessLinks from './components/AccessLinks.vue'
 import NavLinks from './components/NavLinks.vue'
 import NavLinksUser from './components/NavLinksReg.vue'
 
-import ControllerAbout from "./controller/ControllerAbout.js";
-
 export const about = function() {
     const hash = getCookie("user_hash");
     createApp(Content).mount('#content');
@@ -18,6 +16,4 @@ export const about = function() {
         createApp(AccessLinks).mount('#access-links');
         createApp(NavLinksUser).mount('#nav-links');
     }
-    let controller = new ControllerAbout();
-    controller.init();
 }

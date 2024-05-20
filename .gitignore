@@ -8,3 +8,4 @@ poetry.lock
 .env
 *.txt
 list.sh
+**.vscode

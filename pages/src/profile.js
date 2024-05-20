@@ -8,8 +8,6 @@ import NavLinksUser from './components/NavLinksReg.vue'
 import NotUser from './components/profile/NotUser.vue'
 import ProfileData from './components/profile/ProfileData.vue'
 
-import ControllerProfile from "./controller/ControllerProfile.js";
-
 export const profile = async function() {
     const hash = getCookie("user_hash");
     createApp(Content).mount('#content');
@@ -50,6 +48,4 @@ export const profile = async function() {
         createApp(NavLinksUser).mount('#nav-links');
         createApp(ProfileData).mount('#data');
     }
-    let controller = new ControllerProfile();
-    controller.init();
 }
